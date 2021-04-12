@@ -25,12 +25,12 @@ struct NodoQuad
     int tamano();
     bool N_insertar(int dato);
 
-    void hojas(vector<NodoQuad>& v);
+    void N_hojas(vector<NodoQuad>& v);
     void graficar(vector<vector<int>>& matriz, int n);
 
     //recorridos
     void N_preOrden(vector<int>& v);
-    //void N_preOrden(vector<NodoQuad>& v);
+    void N_preOrden(vector<NodoQuad>& v);
 };
 
 
@@ -121,11 +121,11 @@ long long NodoQuad::preOrden()
 */
 
 //recorrido en posorden buscando hojas a partir del nodo actual
-void NodoQuad::hojas(vector<NodoQuad>& v)
+void NodoQuad::N_hojas(vector<NodoQuad>& v)
 {
     for(int i=0; i<4; i++)
         if(cuadrantes[i] != NULL)
-            cuadrantes[i]->hojas(v);
+            cuadrantes[i]->N_hojas(v);
     if(esHoja())
         v.push_back(*this);
 }
@@ -146,10 +146,10 @@ int elevar(int a, int n)
 
 //asi se distribuyen los cuadrantes
 // 1 2
-// 3 4
+// 4 3
 
 //la idea de esta funcion es tomar nodos hoja y graficar en la matriz 
-void NodoQuad::graficar(vector<vector<int>>& matriz, int n)
+void NodoQuad::graficar(vector<vector<int>>& mat, int n)
 {
     int i_inf = 0, i_sup = n;
     int j_inf = 0, j_sup = n;
@@ -163,7 +163,7 @@ void NodoQuad::graficar(vector<vector<int>>& matriz, int n)
         {
             //i_inf, j_inf se mantienen
             i_sup = (i_inf + i_sup)/2;
-            j_sup = i_sup;
+            j_sup = (j_inf + j_sup)/2;
         }
 
         //si es hijo 2 (cuadrante 2)
@@ -171,29 +171,29 @@ void NodoQuad::graficar(vector<vector<int>>& matriz, int n)
         {
             //i_inf, j_sup se mantienen
             i_sup = (i_inf + i_sup)/2;
-            j_inf = i_sup; 
+            j_inf = (j_inf + j_sup)/2; 
         }
 
         //si es hijo 3 (cuadrante 3)
         if(ubicacion[i] == 3)
         {
-            //i_sup, j_inf se mantienen
+            //i_sup, j_sup se mantienen
             i_inf = (i_inf + i_sup)/2;
-            j_sup = i_inf;
+            j_inf = (j_inf + j_sup)/2;
         }
         
         //si es hijo 4 (cuadrante 4)
         if(ubicacion[i] == 4)
         {
-            //i_sup, j_sup se mantienen
+            //i_sup, j_inf se mantienen
             i_inf = (i_inf + i_sup)/2;
-            j_inf = i_inf;
+            j_sup = (j_inf + j_sup)/2;
         }
     }
     //ahora que los limites estan definidos se rellena el pedazo de matriz correspondiente
     for(int i = i_inf; i < i_sup; i++)
         for(int j = j_inf; j < j_sup; j++)
-            matriz[i][j]= color;
+            mat[i][j]= color;
 }    
     
     /*

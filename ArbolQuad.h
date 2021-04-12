@@ -10,7 +10,7 @@ struct ArbolQuad
 
     bool A_insertar(int dato);
 
-    void hojas(vector<NodoQuad>& v);
+    //void A_hojas(vector<NodoQuad>& v);
     void generarImagen(vector<NodoQuad>& v, vector<vector<int>>& matriz, int n);
 
 
@@ -34,13 +34,15 @@ bool ArbolQuad::A_insertar(int dato)
         return raiz->N_insertar(dato);
 }
 
-void ArbolQuad::hojas(vector<NodoQuad>& v)
+/*
+void ArbolQuad::A_hojas(vector<NodoQuad>& v)
 {
     if(esVacio())
         cout<<"Arbol vacio!\n";
     else
-        raiz->hojas(v);
+        raiz->N_hojas(v);
 }
+*/
 
 void ArbolQuad::generarImagen(vector<NodoQuad>& v, vector<vector<int>>& matriz, int n)
 {
@@ -49,7 +51,7 @@ void ArbolQuad::generarImagen(vector<NodoQuad>& v, vector<vector<int>>& matriz, 
     else
     {
         //buscar y almacenar las hojas del arbol en el vector de Nodos v.
-        raiz->hojas(v);
+        raiz->N_hojas(v);
         
         //hoja por hoja ir graficando el pedazo en la matriz
         for(int i = 0; i<v.size(); i++)
@@ -66,7 +68,6 @@ void ArbolQuad::A_preOrden(vector<int>& v)
     else
         raiz->N_preOrden(v);
 }
-
 
 /*
 void ArbolQuad::A_preOrden(vector<NodoQuad>& v)
